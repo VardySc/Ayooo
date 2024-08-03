@@ -1,0 +1,55 @@
+local Players = game:GetService("Players")
+
+local function highlightPlayers()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+            
+            -- Check if the player already has a BillboardGui to avoid duplicates
+            if not player.Character:FindFirstChild("PlayerNameGui") then
+                -- Create a new BillboardGui
+                local billboardGui = Instance.new("BillboardGui")
+                billboardGui.Name = "PlayerNameGui"
+                billboardGui.Adornee = humanoidRootPart
+                billboardGui.Size = UDim2.new(50)
+                billboardGui.StudsOffset = Vector3.new(2)
+                billboardGui.AlwaysOnTop = true
+
+                -- Create a TextLabel to display the player's name
+                local textLabel = Instance.new("TextLabel")
+                textLabel.Size = UDim2.new(1, 0, 1, 0)
+                textLabel.BackgroundTransparency = 1
+                textLabel.Text = player.Name
+                textLabel.TextColor3 = Color3.new(1, 1, 1)
+                textLabel.TextStrokeTransparency = 0
+                textLabel.TextScaled = true
+
+                -- Parent the TextLabel to the BillboardGui
+                textLabel.Parent = billboardGui
+                
+                -- Parent the BillboardGui to the player's character
+                billboardGui.Parent = player.Character
+            end
+        end
+    end
+end
+
+-- Run the function once at the start
+highlightPlayers()
+
+-- Update the highlights when players join
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        highlightPlayers()
+    end)
+end)
+
+-- Update the highlights when a player's character respawns
+Players.PlayerRemoving:Connect(function(player)
+    player.CharacterRemoving:Connect(function()
+        -- Optional: Remove the BillboardGui when a player leaves
+        if player.Character:FindFirstChild("PlayerNameGui") then
+            player.Character.PlayerNameGui:Destroy()
+        end
+    end)
+end)
