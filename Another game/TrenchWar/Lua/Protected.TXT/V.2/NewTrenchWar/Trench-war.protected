@@ -1,5 +1,5 @@
 local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
-local PhantomForcesWindow = Library:NewWindow("Trench Ware")
+local PhantomForcesWindow = Library:NewWindow("Trench Ware😈")
 local KillingCheats = PhantomForcesWindow:NewSection("cooldown or hitbox")
 KillingCheats:CreateButton("no cooldown", function()
 g = hookfunction(wait, function(seconds)
@@ -8,7 +8,7 @@ end)
 print("HI")
 end)
 KillingCheats:CreateButton("hitbox", function()
-local HeadSize = 10
+local HeadSize = 50
 local IsDisabled = true
 local IsTeamCheckEnabled = false 
 
